@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Future Stars Academy</title>
+  <script src="Typescript.ts"></script>
+  <script src="PYTHON.py"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      line-height: 1.6;
+      background: #f4f8fb;
+      color: #333;
+    }
+
+    /* Modern Nav Bar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      transition: background 0.3s ease;
+    }
+
+    header h1 {
+      font-size: 26px;
+      color: #0d3b66;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #0d3b66;
+      font-weight: 600;
+      padding: 10px 15px;
+      border-radius: 30px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #fca311;
+      color: white;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      background: url('https://images.unsplash.com/photo-1588072432836-e10032774350') no-repeat center center/cover;
+      padding: 150px 20px;
+      color: white;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h2 {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 22px;
+      margin-bottom: 40px;
+    }
+
+    .cta-button {
+      background-color: #fca311;
+      color: white;
+      border: none;
+      padding: 18px 35px;
+      font-size: 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #ffb703;
+      transform: scale(1.05);
+    }
+
+    /* Features Section */
+    section {
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      font-size: 34px;
+      color: #0d3b66;
+      margin-bottom: 25px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .feature-box {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .feature-box:hover {
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      background: #0d3b66;
+      color: white;
+      padding: 50px 40px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    footer div {
+      flex: 1;
+      min-width: 250px;
+      margin: 15px;
+    }
+
+    footer h4 {
+      margin-bottom: 10px;
+    }
+
+    .social-icons a {
+      color: white;
+      margin-right: 15px;
+      font-size: 22px;
+      text-decoration: none;
+    }
+
+    .newsletter input[type="email"] {
+      padding: 12px;
+      width: 75%;
+      border: none;
+      border-radius: 5px;
+      margin-right: 15px;
+    }
+
+    .newsletter button {
+      padding: 12px 20px;
+      background: #fca311;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Chatbot button */
+    .chatbot-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #00c3ff;
+      border: none;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      font-size: 35px;
+      color: white;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .chat-window {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 350px;
+      max-height: 600px;
+      background: #ffffff;
+      color: #333;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 999;
+    }
+
+    .chat-header {
+      background: #00c3ff;
+      padding: 15px;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      background: #f7f7f7;
+    }
+
+    .chat-message {
+      margin: 15px 0;
+    }
+
+    .chat-message.user {
+      text-align: right;
+      color: #00c3ff;
+    }
+
+    .chat-message.bot {
+      text-align: left;
+      color: #333;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+
+    .chat-input input {
+      flex: 1;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .chat-input button {
+      background: #00c3ff;
+      border: none;
+      padding: 12px 20px;
+      color: white;
+      cursor: pointer;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #00c3ff;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Future Stars Academy</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#why">Why Us</a>
+    <a href="#programs">Programs</a>
+    <a href="#coaches">Coaches</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h2>Unleash Your Child’s Potential</h2>
+    <p>Where young stars grow into tomorrow’s champions. Start their journey today!</p>
+    <button class="cta-button" ><a href="Registrration.html" target="_blank">Register For Free Trial</a></button>
+  </div>
+</section>
+<section id="why">
+    <h2 class="section-title">Why Choose Us?</h2>
+    <div class="features-grid">
+      <div class="feature-box">
+        <h3>✅ Expert Coaches</h3>
+        <p>All of our instructors are certified, experienced, and dedicated to child development.</p>
+      </div>
+      <div class="feature-box">
+        <h3>🎨 Multi-Talent Curriculum</h3>
+        <p>We combine sports, arts, and STEM to help kids grow in all directions.</p>
+      </div>
+      <div class="feature-box">
+        <h3>🏆 Success Stories</h3>
+        <p>Over 1,000 alumni are now thriving in competitive fields across the globe.</p>
+      </div>
+    </div>
+  </section>
+  
+  <section id="programs">
+    <h2 class="section-title">Our Programs</h2>
+    <div class="features-grid">
+      <div class="feature-box">
+        <ul>
+          <li>✨ Tiny Stars (Ages 3-5): Movement, balance, and play</li>
+        </ul>
+      </div>
+      <div class="feature-box">
+        <ul>
+          <li>🚀 Rising Stars (Ages 6-9): Skills and teamwork</li>
+        </ul>
+      </div>
+      <div class="feature-box">
+        <ul>
+          <li>🏅 Future Pros (Ages 10-14): Advanced training</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  
+  <section>
+    <h2 class="section-title">Our Mission & Vision</h2>
+    <div class="features-grid">
+      <div class="feature-box">
+        <p><strong>Mission:</strong> To inspire and empower young athletes by nurturing their talents and fostering lifelong confidence and discipline.</p>
+      </div>
+      <div class="feature-box">
+        <p><strong>Vision:</strong> To become the leading academy recognized for developing champions on and off the field.</p>
+      </div>
+    </div>
+  </section>
+  
+  <section id="coaches">
+    <h2 class="section-title">Meet Our Coaches</h2>
+    <div class="features-grid">
+      <div class="feature-box">
+        <h4>Coach Amanda Lewis</h4>
+        <p>Former Olympian and founder. 15+ years of elite coaching experience. Known for energy, empathy, and high standards.</p>
+      </div>
+      <div class="feature-box">
+        <h4>Coach Reggie Carter</h4>
+        <p>Youth performance specialist with a background in psychology and strength training.</p>
+      </div>
+    </div>
+  </section>
+  
+  <section id="partnerships" class="partnerships">
+    <h2 class="section-title">Our Partnerships</h2>
+    <p>We collaborate with top-tier organizations to bring the best experiences and opportunities for our young athletes.</p>
+    <div class="features-grid">
+      <div class="feature-box">
+        <img src="unnited.png" alt="Partner 1">
+        <p>Manchester United</p>
+      </div>
+      <div class="feature-box">
+        <img src="IMG/barcelona.png" alt="Partner 2">
+        <p>FC BARCELONA</p>
+      </div>
+      <div class="feature-box">
+        <img src="IMG/femi.jpg" alt="Partner 3">
+        <p>FEMI AND THE GANG</p>
+      </div>
+    </div>
+  </section>
+  
+  <section id="contact">
+    <h2 class="section-title">Location & Hours</h2>
+    <p><strong>Address:</strong> 123 Future Lane, Sports City, TX</p>
+    <p><strong>Hours:</strong> Mon–Fri: 3PM–8PM | Sat: 9AM–1PM</p>
+  </section>
+  
+  <section class="testimonials">
+    <h2 class="section-title">What Parents Are Saying</h2>
+    <blockquote>
+      "Coach Amanda helped my daughter go from shy and hesitant to confident and bold. Amazing!" – Teresa M.
+    </blockquote>
+    <blockquote>
+      "Best investment we made this year. The staff genuinely care about every child." – Jordan P.
+    </blockquote>
+  </section>
+
+<!-- Chatbot Button -->
+<button class="chatbot-toggle" onclick="toggleChat()">💬</button>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">Future Stars Academy</div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-message bot">👋 Hello! Welcome to Future Stars Academy! How can I assist you today?</div>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  const chatWindow = document.getElementById('chatWindow');
+  const chatBody = document.getElementById('chatBody');
+  const userInput = document.getElementById('userInput');
+
+  function toggleChat() {
+    chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+  }
+
+  function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+
+    appendMessage('user', message);
+    userInput.value = '';
+    setTimeout(() => {
+      generateBotReply(message);
+    }, 700);
+  }
+
+  function appendMessage(sender, text) {
+    const msg = document.createElement('div');
+    msg.classList.add('chat-message', sender);
+    msg.textContent = text;
+    chatBody.appendChild(msg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function generateBotReply(input) {
+    let reply = "I'm not sure how to help with that.";
+
+    const lowerInput = input.toLowerCase();
+    if (lowerInput.includes('register') || lowerInput.includes('join')) {
+      reply = "You can register by visiting our official page and filling out the form. Would you like the link?";
+    } else if (lowerInput.includes('fees') || lowerInput.includes('cost')) {
+      reply = "Our academy offers flexible fee plans. Please tell me the age group for accurate info.";
+    } else if (lowerInput.includes('location')) {
+      reply = "We're located in Lagos, Nigeria 🇳🇬. Want directions?";
+    } else if (lowerInput.includes('train') || lowerInput.includes('coaches')) {
+      reply = "Our UEFA-certified coaches focus on youth development, tactical skills, and discipline.";
+    } else if (lowerInput.includes('hello') || lowerInput.includes('hi')) {
+      reply = "Hey there! ⚽ How can I assist you today?";
+    }
+
+    appendMessage('bot', reply);
+  }
+
+  userInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") sendMessage();
+  });
+</script>
+
+<footer>
+    <div>
+      <h4>About Us</h4>
+      <p>We are passionate about building future champions through a blend of fun, discipline, and personalized training.</p>
+    </div>
+    <div>
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#">🌐 Facebook</a>
+        <a href="#">📸 Instagram</a>
+        <a href="#">📹 YouTube</a>
+      </div>
+    </div>
+    <div class="newsletter">
+      <h4>Join Our Newsletter</h4>
+      <input type="email" placeholder="Enter your email" />
+      <button>Subscribe</button>
+    </div>
+  </footer>
+      
